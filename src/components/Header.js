@@ -2,7 +2,11 @@ import React from "react";
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
+import LoginButton from './login';
+import LogoutButton from './logout';
+import { withAuth0 } from "@auth0/auth0-react";
+
+
 class Header extends React.Component {
   render() {
     return(
@@ -12,16 +16,16 @@ class Header extends React.Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="headerNav">
-              <Nav.Link href=''>Home</Nav.Link>
-              <Nav.Link href=''>Profile</Nav.Link>
-              <Nav.Link href=''>AboutUs</Nav.Link>
+              <Nav.Link href='/'>Home</Nav.Link>
+              <Nav.Link href='/profile'>Profile</Nav.Link>
+              <Nav.Link href='/aboutus'>AboutUs</Nav.Link>
             </Nav>
           </Navbar.Collapse>
-          <Button variant='success'>Log In</Button>
+          {this.props.auth0.isAuthenticated ? <LogoutButton /> : <LoginButton />}
         </Container>
       </Navbar>
     )
   }
 }
 
-export default Header;
+export default withAuth0(Header);
