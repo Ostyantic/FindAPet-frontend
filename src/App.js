@@ -6,6 +6,16 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
+import Header from './components/Header';
+import Home from './components/home';
+import Profile from './components/profile';
+import AboutUs from './components/about-us';
+import Footer from './components/Footer';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from "react-router-dom";
 
 
 
@@ -168,8 +178,35 @@ class App extends React.Component {
 
     return (
       <>
-        <Container style={containerStyling}>
-          <Accordion defaultActiveKey="type" alwaysOpen>
+
+
+        <Router>
+          <Header className='header'/>
+          <Routes>
+            <Route 
+            exact path='/'
+            element={<Home
+              handleLocationChange={this.handleLocationChange}
+              handleDistanceChange={this.handleDistanceChange}
+              handleBooleanChange={this.handleBooleanChange}
+              handleArrayValueChange={this.handleArrayValueChange}
+              handleSubmit={this.handleSubmit}
+            />}
+            />
+            <Route
+            exact path='/profile'
+            element={<Profile />}
+            
+            />
+             <Route
+            exact path='/aboutus'
+            element={<AboutUs />}
+            
+            />
+          </Routes>
+
+          {/* <Container style={containerStyling}>
+            <Accordion defaultActiveKey="type" alwaysOpen>
 
             {
               //! Type Accordion Element
@@ -202,9 +239,9 @@ class App extends React.Component {
               </Accordion.Body>
             </Accordion.Item>
 
-            {
-              //! Age Accordion Element
-            }
+              {
+                //! Age Accordion Element
+              }
             <Accordion.Item eventKey="age">
               <Accordion.Header>Of the age(s):</Accordion.Header>
               <Accordion.Body>
@@ -237,6 +274,7 @@ class App extends React.Component {
               </Accordion.Body>
             </Accordion.Item>
 
+
             {
               //! gender Accordion Element
             }
@@ -266,30 +304,31 @@ class App extends React.Component {
               </Accordion.Body>
             </Accordion.Item>
 
-            {
-              //! Distance/Location Accordion Element
-            }
-            <Accordion.Item eventKey="disloc">
-              <Accordion.Header>
-                Located:
-              </Accordion.Header>
-              <Accordion.Body>
-                <InputGroup className="mb-3">
-                  within
-                  <Form.Select onChange={this.handleDistanceChange} aria-label="milesDistanceSelect">
-                    <option value={50}>50</option>
-                    <option value={100}>100</option>
-                    <option value={250}>250</option>
-                    <option value={500}>500</option>
-                  </Form.Select>
-                  <InputGroup.Text id="milesOfAddon">miles of</InputGroup.Text>
-                  <Form>
-                    <Form.Control onChange={this.handleLocationChange} type="location" placeholder="City, state, or ZIP" />
-                  </Form>
-                </InputGroup>
-              </Accordion.Body>
-            </Accordion.Item>
+              {
+                //! Distance/Location Accordion Element
+              }
+              <Accordion.Item eventKey="disloc">
+                <Accordion.Header>
+                  Located:
+                </Accordion.Header>
+                <Accordion.Body>
+                  <InputGroup className="mb-3">
+                    within
+                    <Form.Select onChange={this.handleDistanceChange} aria-label="milesDistanceSelect">
+                      <option value={50}>50</option>
+                      <option value={100}>100</option>
+                      <option value={250}>250</option>
+                      <option value={500}>500</option>
+                    </Form.Select>
+                    <InputGroup.Text id="milesOfAddon">miles of</InputGroup.Text>
+                    <Form>
+                      <Form.Control onChange={this.handleLocationChange} type="location" placeholder="City, state, or ZIP" />
+                    </Form>
+                  </InputGroup>
+                </Accordion.Body>
+              </Accordion.Item>
 
+                          
             {
               //! Size Accordion Element
             }
@@ -325,6 +364,8 @@ class App extends React.Component {
               </Accordion.Body>
             </Accordion.Item>
 
+
+
             {
               //! Temperament Accordion Element
             }
@@ -355,17 +396,24 @@ class App extends React.Component {
             </Accordion.Item>
           </Accordion>
 
-          {
-            //! submit button
-          }
-          <Button onClick={() => this.handleSubmit()}>
-            Search For Pets!
-          </Button>
+
+
+            {
+              //! submit button
+            }
+
+            <Button onClick={() => this.handleSubmit()}>
+              Search For Pets!
+            </Button>
+          </Container>
 
 
 
-        </Container>
 
+          <Footer className='footer'/>
+
+
+        </Router>
 
 
 
