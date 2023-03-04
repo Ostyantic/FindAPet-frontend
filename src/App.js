@@ -205,7 +205,7 @@ class App extends React.Component {
             />
           </Routes>
 
-          {/* <Container style={containerStyling}>
+           {/* <Container style={containerStyling}>
             <Accordion defaultActiveKey="type" alwaysOpen>
 
             {
@@ -405,7 +405,7 @@ class App extends React.Component {
             <Button onClick={() => this.handleSubmit()}>
               Search For Pets!
             </Button>
-          </Container>
+          </Container> */}
 
 
 
