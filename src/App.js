@@ -5,6 +5,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
+import axios from 'axios';
 import Header from './components/Header';
 import Home from './components/home';
 import Profile from './components/profile';
@@ -15,6 +16,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+
 
 
 
@@ -74,6 +76,9 @@ class App extends React.Component {
       distance: 50,
 
 
+      //This is a concatenated string that has all of the arguments that the user has chosen before hitting search for pets. filled out when the submit button is pressed. example of what this variable will look like: 
+      //?    'age=young, adult&gender=female&size=large, xlarge'
+      sentArgs: ''
 
 
     };
@@ -109,17 +114,63 @@ class App extends React.Component {
 
   };
 
+
+  handleConvertArrToStr = (key) => {
+    const stringed = this.state[key].join(', ')
+
+    return stringed;
+    // this.setState({ [key]: stringed })
+    // console.log(`stringed value is ${stringed} and our keyvalue is now ${this.state[key]}`)
+  };
+
+  handleCullUnusedArr = (key) => {
+
+    var added = this.state[key]
+    console.log("PING!")
+    console.log(added)
+
+    this.state[key] === [] ? console.log(`${this.state[key]} is empty.`) :
+
+
+
+
+      this.setState({})
+
+  }
+
+
   //?called when Search For Pets! is clicked.
   handleSubmit = () => {
+
+
+    //example target fullURL http://localhost:3001/getpet?age=young, adult&gender=female
+    // var sentArgs = '';
+    // var sentFullURL = '';
+
     console.log(`Type: ${this.state.type}`)
-    console.log(`Size: ${this.state.size}`)
     console.log(`Age: ${this.state.age}`)
     console.log(`Gender: ${this.state.gender}`)
     console.log(`Distance: ${this.state.distance}`)
     console.log(`Location: ${this.state.location}`)
+    console.log(`Size: ${this.state.size}`)
     console.log(`Good Cats: ${this.state.good_with_cats}`)
     console.log(`Good Children: ${this.state.good_with_children}`)
     console.log(`Good Dogs: ${this.state.good_with_dogs}`)
+    var type = this.handleConvertArrToStr('type')
+    console.log(`Our strung type is ${type}`)
+    var age = this.handleConvertArrToStr('age')
+    var gender = this.handleConvertArrToStr('gender')
+    var size = this.handleConvertArrToStr('size')
+
+    this.handleCullUnusedArr('age')
+
+
+
+
+
+
+    axios.get(`${process.env.BACK_END_URL}/getpet?${this.state.sentArgs}`)
+
   }
 
   render() {
@@ -127,6 +178,7 @@ class App extends React.Component {
 
     return (
       <>
+
 
         <Router>
           <Header className='header'/>
@@ -156,120 +208,101 @@ class App extends React.Component {
           {/* <Container style={containerStyling}>
             <Accordion defaultActiveKey="type" alwaysOpen>
 
-              {
-                //! Type Accordion Element
-              }
-              <Accordion.Item eventKey="type">
-                <Accordion.Header>I am looking for a:</Accordion.Header>
-                <Accordion.Body>
-                  <Form>
-                    {['checkbox'].map((type) => (
-                      <div key={`inline-${type}`} className="mb-type">
-                        <Form.Check
-                          inline
-                          label="cat"
-                          type={type}
-                          id={`inline-${type}-1`}
-                          onClick={() => this.handleArrayValueChange('type', 'cat')}
-                        />
-                        <Form.Check
-                          inline
-                          label="dog"
-                          type={type}
-                          id={`inline-${type}-2`}
-                          onClick={() => this.handleArrayValueChange('type', 'dog')}
-                        />
-                        <Form.Check
-                          inline
-                          label="Small furry critter"
-                          type={type}
-                          id={`inline-${type}-2`}
-                          onClick={() => this.handleArrayValueChange('type', 'critter')}
-                        />
-                      </div>
-                    ))}
-                  </Form>
-                </Accordion.Body>
-              </Accordion.Item>
+            {
+              //! Type Accordion Element
+            }
+            <Accordion.Item eventKey="type">
+              <Accordion.Header>I am looking for a:</Accordion.Header>
+              <Accordion.Body>
+                <Form>
+
+                  <Form.Check
+                    inline
+                    type='checkbox'
+                    label='cat'
+                    onClick={() => this.handleArrayValueChange('type', 'cat')}
+                  />
+                  <Form.Check
+                    inline
+                    type='checkbox'
+                    label='dog'
+                    onClick={() => this.handleArrayValueChange('type', 'dog')}
+                  />
+                  <Form.Check
+                    inline
+                    type='checkbox'
+                    label='Small furry critter'
+                    onClick={() => this.handleArrayValueChange('type', 'critter')}
+                  />
+
+                </Form>
+              </Accordion.Body>
+            </Accordion.Item>
 
               {
                 //! Age Accordion Element
               }
-              <Accordion.Item eventKey="age">
-                <Accordion.Header>Of the age(s):</Accordion.Header>
-                <Accordion.Body>
-                  <Form>
-                    {['checkbox'].map((type) => (
-                      <div key={`inline-${type}`} className="mb-age">
-                        <Form.Check
-                          inline
-                          label="baby"
-                          type={type}
-                          id={`inline-${type}-1`}
-                          onClick={() => this.handleArrayValueChange('age', 'baby')}
-                        />
-                        <Form.Check
-                          inline
-                          label="young"
-                          type={type}
-                          id={`inline-${type}-2`}
-                          onClick={() => this.handleArrayValueChange('age', 'young')}
-                        />
-                        <Form.Check
-                          inline
-                          label="adult"
-                          type={type}
-                          id={`inline-${type}-2`}
-                          onClick={() => this.handleArrayValueChange('age', 'adult')}
-                        />
-                        <Form.Check
-                          inline
-                          label="senior"
-                          type={type}
-                          id={`inline-${type}-2`}
-                          onClick={() => this.handleArrayValueChange('age', 'senior')}
-                        />
-                      </div>
-                    ))}
-                  </Form>
-                </Accordion.Body>
-              </Accordion.Item>
+            <Accordion.Item eventKey="age">
+              <Accordion.Header>Of the age(s):</Accordion.Header>
+              <Accordion.Body>
+                <Form>
+                  <Form.Check
+                    inline
+                    type='checkbox'
+                    label='baby'
+                    onClick={() => this.handleArrayValueChange('age', 'baby')}
+                  />
+                  <Form.Check
+                    inline
+                    type='checkbox'
+                    label='young'
+                    onClick={() => this.handleArrayValueChange('age', 'young')}
+                  />
+                  <Form.Check
+                    inline
+                    type='checkbox'
+                    label='adult'
+                    onClick={() => this.handleArrayValueChange('age', 'adult')}
+                  />
+                  <Form.Check
+                    inline
+                    type='checkbox'
+                    label='senior'
+                    onClick={() => this.handleArrayValueChange('age', 'senior')}
+                  />
+                </Form>
+              </Accordion.Body>
+            </Accordion.Item>
 
-              {
-                //! gender Accordion Element
-              }
-              <Accordion.Item eventKey="gender">
-                <Accordion.Header>Of the gender(s):</Accordion.Header>
-                <Accordion.Body>
-                  <Form>
-                    {['checkbox'].map((type) => (
-                      <div key={`inline-${type}`} className="mb-gender">
-                        <Form.Check
-                          inline
-                          label="male"
-                          type={type}
-                          id={`inline-${type}-1`}
-                          onClick={() => this.handleArrayValueChange('gender', 'male')}
-                        />
-                        <Form.Check
-                          inline
-                          label="female"
-                          type={type}
-                          id={`inline-${type}-2`}
-                          onClick={() => this.handleArrayValueChange('gender', 'female')}
-                        />
-                        <Form.Check
-                          inline
-                          label="unknown"
-                          type={type}
-                          id={`inline-${type}-2`}
-                          onClick={() => this.handleArrayValueChange('gender', 'unknown')}
-                        />
-                      </div>
-                    ))}
-                  </Form>
-                </Accordion.Body>
-              </Accordion.Item>
+
+            {
+              //! gender Accordion Element
+            }
+            <Accordion.Item eventKey="gender">
+              <Accordion.Header>Of the gender(s):</Accordion.Header>
+              <Accordion.Body>
+                <Form>
+                  <Form.Check
+                    inline
+                    type='checkbox'
+                    label='male'
+                    onClick={() => this.handleArrayValueChange('gender', 'male')}
+                  />
+                  <Form.Check
+                    inline
+                    type='checkbox'
+                    label='female'
+                    onClick={() => this.handleArrayValueChange('gender', 'female')}
+                  />
+                  <Form.Check
+                    inline
+                    type='checkbox'
+                    label='unknown'
+                    onClick={() => this.handleArrayValueChange('gender', 'unknown')}
+                  />
+                </Form>
+              </Accordion.Body>
+            </Accordion.Item>
 
               {
                 //! Distance/Location Accordion Element
@@ -295,99 +328,90 @@ class App extends React.Component {
                 </Accordion.Body>
               </Accordion.Item>
 
-              {
-                //! Size Accordion Element
-              }
-              <Accordion.Item eventKey="size">
-                <Accordion.Header>of the size(s):</Accordion.Header>
-                <Accordion.Body>
-                  <Form>
-                    {['checkbox'].map((type) => (
-                      <div key={`inline-${type}`} className="mb-3">
-                        <Form.Check
-                          inline
-                          label="Small"
-                          type={type}
-                          id={`inline-${type}-1`}
-                          onClick={() => this.handleArrayValueChange('size', 'small')}
-                        />
-                        <Form.Check
-                          inline
-                          label="Medium"
-                          type={type}
-                          id={`inline-${type}-2`}
-                          onClick={() => this.handleArrayValueChange('size', 'medium')}
-                        />
-                        <Form.Check
-                          inline
-                          label="Large"
-                          type={type}
-                          id={`inline-${type}-2`}
-                          onClick={() => this.handleArrayValueChange('size', 'large')}
-                        />
-                        <Form.Check
-                          inline
-                          label="Extra Large"
-                          name="group1"
-                          type={type}
-                          id={`inline-${type}-2`}
-                          onClick={() => this.handleArrayValueChange('size', 'xlarge')}
-                        />
-                      </div>
-                    ))}
-                  </Form>
-                </Accordion.Body>
-              </Accordion.Item>
+                          
+            {
+              //! Size Accordion Element
+            }
+            <Accordion.Item eventKey="size">
+              <Accordion.Header>of the size(s):</Accordion.Header>
+              <Accordion.Body>
+                <Form>
+                  <Form.Check
+                    inline
+                    type='checkbox'
+                    label='small'
+                    onClick={() => this.handleArrayValueChange('size', 'small')}
+                  />
+                  <Form.Check
+                    inline
+                    type='checkbox'
+                    label='medium'
+                    onClick={() => this.handleArrayValueChange('size', 'medium')}
+                  />
+                  <Form.Check
+                    inline
+                    type='checkbox'
+                    label='large'
+                    onClick={() => this.handleArrayValueChange('size', 'large')}
+                  />
+                  <Form.Check
+                    inline
+                    type='checkbox'
+                    label='extra large'
+                    onClick={() => this.handleArrayValueChange('size', 'xlarge')}
+                  />
+                </Form>
+              </Accordion.Body>
+            </Accordion.Item>
 
-              {
-                //! Temperament Accordion Element
-              }
-              <Accordion.Item eventKey="temper">
-                <Accordion.Header>with a temperament that is:</Accordion.Header>
-                <Accordion.Body>
-                  <Form>
-                    {['checkbox'].map((type) => (
-                      <div key={`inline-${type}`} className="mb-4">
-                        <Form.Check
-                          inline
-                          label="good with cats"
-                          type={type}
-                          id={`inline-${type}-1`}
-                          onClick={() => this.handleBooleanChange('good_with_cats')}
-                        />
-                        <Form.Check
-                          inline
-                          label="good with dogs"
-                          type={type}
-                          id={`inline-${type}-2`}
-                          onClick={() => this.handleBooleanChange('good_with_dogs')}
-                        />
-                        <Form.Check
-                          inline
-                          label="good with children"
-                          type={type}
-                          id={`inline-${type}-2`}
-                          onClick={() => this.handleBooleanChange('good_with_children')}
-                        />
-                      </div>
-                    ))}
-                  </Form>
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
+
+
+            {
+              //! Temperament Accordion Element
+            }
+            <Accordion.Item eventKey="temper">
+              <Accordion.Header>with a temperament that is:</Accordion.Header>
+              <Accordion.Body>
+                <Form>
+                  <Form.Check
+                    inline
+                    type='checkbox'
+                    label='good with cats'
+                    onClick={() => this.handleBooleanChange('good_with_cats')}
+                  />
+                  <Form.Check
+                    inline
+                    type='checkbox'
+                    label='good with dogs'
+                    onClick={() => this.handleBooleanChange('good_with_dogs')}
+                  />
+                  <Form.Check
+                    inline
+                    type='checkbox'
+                    label='good with children'
+                    onClick={() => this.handleBooleanChange('good_with_children')}
+                  />
+                </Form>
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+
+
 
             {
               //! submit button
             }
+
             <Button onClick={() => this.handleSubmit()}>
               Search For Pets!
             </Button>
+          </Container>
 
 
 
-          </Container> */}
 
           <Footer className='footer'/>
+
 
         </Router>
 
