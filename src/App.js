@@ -16,8 +16,6 @@ import {
 
 
 
-
-
 class App extends React.Component {
 
 
@@ -204,13 +202,10 @@ class App extends React.Component {
             />
           </Routes>
 
-
-
           <Footer className='footer' />
 
 
         </Router>
-        
       </>
     );
   }
