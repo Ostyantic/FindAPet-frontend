@@ -112,16 +112,17 @@ class App extends React.Component {
   };
 
 
+  handleRadioChange = (key, value) => {
+    this.setState({ [key]: value })
+  }
 
 
   handleAssembleUrl = () => {
     var parameterNestedArray = []
 
-    if (this.state.type.length !== 0) {
-      var typeStringed = this.state.type.join(',');
-      console.log(`type=${typeStringed}`)
-      parameterNestedArray.push(`type=${typeStringed}`)
-    }
+
+      parameterNestedArray.push(`type=${this.state.type}`)
+    
 
     if (this.state.age.length !== 0) {
       var ageStringed = this.state.age.join(',')
@@ -163,7 +164,7 @@ class App extends React.Component {
     var sentArgs = this.handleAssembleUrl();
     console.log(`SENT ARGS: ${sentArgs}`)
 
-    var url = `${process.env.REACT_APP_BACK_END_URL}/getpet?${sentArgs}`
+    var url = `${process.env.REACT_APP_SERVER}/getpet?${sentArgs}`
     console.log(url);
 
     var backendResponse = await axios.get(url)
@@ -190,6 +191,7 @@ class App extends React.Component {
                 handleBooleanChange={this.handleBooleanChange}
                 handleArrayValueChange={this.handleArrayValueChange}
                 handleSubmit={this.handleSubmit}
+                handleRadioChange={this.handleRadioChange}
               />}
             />
             <Route

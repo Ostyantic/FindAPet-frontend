@@ -26,30 +26,43 @@ class Home extends React.Component {
             {
               //! Type Accordion Element
             }
-            <Accordion.Item eventKey="type">
+            <Accordion.Item eventKey="animaltype">
               <Accordion.Header>I am looking for a:</Accordion.Header>
               <Accordion.Body>
                 <Form>
 
                   <Form.Check
                     inline
-                    type='checkbox'
+                    type='radio'
+                    name="group1"
                     label='cat'
-                    onClick={() => this.props.handleArrayValueChange('type', 'cat')}
+                    onClick={() => this.props.handleRadioChange('type', 'cat')}
+                    id='radio1'
                   />
                   <Form.Check
                     inline
-                    type='checkbox'
+                    type='radio'
+                    name="group1"
                     label='dog'
-                    onClick={() => this.props.handleArrayValueChange('type', 'dog')}
+                    onClick={() => this.props.handleRadioChange('type', 'dog')}
+                    id='radio2'
                   />
                   <Form.Check
                     inline
-                    type='checkbox'
-                    label='Small furry critter'
-                    onClick={() => this.props.handleArrayValueChange('type', 'critter')}
+                    type='radio'
+                    name="group1"
+                    label='rabbit'
+                    onClick={() => this.props.handleRadioChange('type', 'rabbit')}
+                    id='radio3'
                   />
-
+                  <Form.Check
+                    inline
+                    type='radio'
+                    name="group1"
+                    label='bird'
+                    onClick={() => this.props.handleRadioChange('type', 'bird')}
+                    id='radio4'
+                  />
                 </Form>
               </Accordion.Body>
             </Accordion.Item>
@@ -108,12 +121,6 @@ class Home extends React.Component {
                     type='checkbox'
                     label='female'
                     onClick={() => this.props.handleArrayValueChange('gender', 'female')}
-                  />
-                  <Form.Check
-                    inline
-                    type='checkbox'
-                    label='unknown'
-                    onClick={() => this.props.handleArrayValueChange('gender', 'unknown')}
                   />
                 </Form>
               </Accordion.Body>
