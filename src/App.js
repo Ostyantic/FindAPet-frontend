@@ -1,16 +1,13 @@
 import React from 'react';
 // import ReactDOM from 'react-dom/client';
-import Container from 'react-bootstrap/Container';
-import Accordion from 'react-bootstrap/Accordion';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
 import Header from './components/Header';
 import Home from './components/home';
 import Profile from './components/profile';
 import AboutUs from './components/about-us';
 import Footer from './components/Footer';
+import Animals from './components/Animals';
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -18,16 +15,6 @@ import {
 } from "react-router-dom";
 
 
-
-
-const containerStyling = {
-  color: "white",
-  backgroundColor: "DodgerBlue",
-  padding: ".5em",
-  fontFamily: "Arial",
-  width: "100%",
-  textAlign: "center",
-};
 
 class App extends React.Component {
 
@@ -75,6 +62,8 @@ class App extends React.Component {
       //distance, in miles. integer. Requires location to be set to be valid. Defaults to 100, maximum 500.
       distance: 50,
 
+      data: []
+
 
 
 
@@ -121,8 +110,8 @@ class App extends React.Component {
     var parameterNestedArray = []
 
 
-      parameterNestedArray.push(`type=${this.state.type}`)
-    
+    parameterNestedArray.push(`type=${this.state.type}`)
+
 
     if (this.state.age.length !== 0) {
       var ageStringed = this.state.age.join(',')
@@ -171,6 +160,9 @@ class App extends React.Component {
 
     console.log(backendResponse.data);
 
+
+    this.setState({ data: backendResponse.data })
+
   }
 
   render() {
@@ -185,14 +177,21 @@ class App extends React.Component {
           <Routes>
             <Route
               exact path='/'
-              element={<Home
-                handleLocationChange={this.handleLocationChange}
-                handleDistanceChange={this.handleDistanceChange}
-                handleBooleanChange={this.handleBooleanChange}
-                handleArrayValueChange={this.handleArrayValueChange}
-                handleSubmit={this.handleSubmit}
-                handleRadioChange={this.handleRadioChange}
-              />}
+              element={
+                <>
+
+                  <Home
+                    handleLocationChange={this.handleLocationChange}
+                    handleDistanceChange={this.handleDistanceChange}
+                    handleBooleanChange={this.handleBooleanChange}
+                    handleArrayValueChange={this.handleArrayValueChange}
+                    handleSubmit={this.handleSubmit}
+                    handleRadioChange={this.handleRadioChange}
+                  />
+
+                  <Animals animalData={this.state.data} />
+                </>}
+
             />
             <Route
               exact path='/profile'
@@ -205,6 +204,8 @@ class App extends React.Component {
 
             />
           </Routes>
+
+
 
           <Footer className='footer' />
 
