@@ -17,7 +17,7 @@ class Header extends React.Component {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="headerNav">
               <Nav.Link href='/'>Home</Nav.Link>
-              <Nav.Link href='/profile'>Profile</Nav.Link>
+              {this.props.auth0.isAuthenticated && <Nav.Link href='/profile'>Profile</Nav.Link>}
               <Nav.Link href='/aboutus'>AboutUs</Nav.Link>
             </Nav>
           </Navbar.Collapse>
