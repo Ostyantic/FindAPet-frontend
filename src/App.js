@@ -1,16 +1,13 @@
 import React from 'react';
 // import ReactDOM from 'react-dom/client';
-import Container from 'react-bootstrap/Container';
-import Accordion from 'react-bootstrap/Accordion';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
 import Header from './components/Header';
 import Home from './components/home';
 import Profile from './components/profile';
 import AboutUs from './components/about-us';
 import Footer from './components/Footer';
+import Animals from './components/Animals';
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -26,17 +23,6 @@ import background from './background.jpg'
 import corporate from './Corporate.jpg'
 
 
-
-
-
-const containerStyling = {
-  color: "white",
-  backgroundColor: "DodgerBlue",
-  padding: ".5em",
-  fontFamily: "Arial",
-  width: "100%",
-  textAlign: "center",
-};
 
 class App extends React.Component {
 
@@ -84,10 +70,9 @@ class App extends React.Component {
       //distance, in miles. integer. Requires location to be set to be valid. Defaults to 100, maximum 500.
       distance: 50,
 
+      data: []
 
-      //This is a concatenated string that has all of the arguments that the user has chosen before hitting search for pets. filled out when the submit button is pressed. example of what this variable will look like: 
-      //?    'age=young, adult&gender=female&size=large, xlarge'
-      sentArgs: ''
+
 
 
     };
@@ -124,37 +109,44 @@ class App extends React.Component {
   };
 
 
-  handleConvertArrToStr = (key) => {
-    const stringed = this.state[key].join(', ')
-
-    return stringed;
-    // this.setState({ [key]: stringed })
-    // console.log(`stringed value is ${stringed} and our keyvalue is now ${this.state[key]}`)
-  };
-
-  handleCullUnusedArr = (key) => {
-
-    var added = this.state[key]
-    console.log("PING!")
-    console.log(added)
-
-    this.state[key] === [] ? console.log(`${this.state[key]} is empty.`) :
+  handleRadioChange = (key, value) => {
+    this.setState({ [key]: value })
+  }
 
 
+  handleAssembleUrl = () => {
+    var parameterNestedArray = []
 
 
-      this.setState({})
+    parameterNestedArray.push(`type=${this.state.type}`)
 
+
+    if (this.state.age.length !== 0) {
+      var ageStringed = this.state.age.join(',')
+      console.log(`age=${ageStringed}`)
+      parameterNestedArray.push(`age=${ageStringed}`)
+    }
+
+    if (this.state.gender.length !== 0) {
+      var genderStringed = this.state.gender.join(',')
+      console.log(`gender=${genderStringed}`)
+      parameterNestedArray.push(`gender=${genderStringed}`)
+    }
+
+    if (this.state.size.length !== 0) {
+      var sizeStringed = this.state.size.join(',')
+      console.log(`size=${sizeStringed}`)
+      parameterNestedArray.push(`size=${sizeStringed}`)
+    }
+
+    var assembled = parameterNestedArray.join('&');
+
+    return assembled
   }
 
 
   //?called when Search For Pets! is clicked.
-  handleSubmit = () => {
-
-
-    //example target fullURL http://localhost:3001/getpet?age=young, adult&gender=female
-    // var sentArgs = '';
-    // var sentFullURL = '';
+  handleSubmit = async () => {
 
     console.log(`Type: ${this.state.type}`)
     console.log(`Age: ${this.state.age}`)
@@ -165,20 +157,19 @@ class App extends React.Component {
     console.log(`Good Cats: ${this.state.good_with_cats}`)
     console.log(`Good Children: ${this.state.good_with_children}`)
     console.log(`Good Dogs: ${this.state.good_with_dogs}`)
-    var type = this.handleConvertArrToStr('type')
-    console.log(`Our strung type is ${type}`)
-    var age = this.handleConvertArrToStr('age')
-    var gender = this.handleConvertArrToStr('gender')
-    var size = this.handleConvertArrToStr('size')
 
-    this.handleCullUnusedArr('age')
+    var sentArgs = this.handleAssembleUrl();
+    console.log(`SENT ARGS: ${sentArgs}`)
+
+    var url = `${process.env.REACT_APP_SERVER}/getpet?${sentArgs}`
+    console.log(url);
+
+    var backendResponse = await axios.get(url)
+
+    console.log(backendResponse.data);
 
 
-
-
-
-
-    axios.get(`${process.env.BACK_END_URL}/getpet?${this.state.sentArgs}`)
+    this.setState({ data: backendResponse.data })
 
   }
 
@@ -190,236 +181,41 @@ class App extends React.Component {
 
 
         <Router>
-          <Header className='header'/>
+          <Header className='header' />
           <Routes>
-            <Route 
-            exact path='/'
-            element={<Home
-              handleLocationChange={this.handleLocationChange}
-              handleDistanceChange={this.handleDistanceChange}
-              handleBooleanChange={this.handleBooleanChange}
-              handleArrayValueChange={this.handleArrayValueChange}
-              handleSubmit={this.handleSubmit}
-            />}
+            <Route
+              exact path='/'
+              element={
+                <>
+
+                  <Home
+                    handleLocationChange={this.handleLocationChange}
+                    handleDistanceChange={this.handleDistanceChange}
+                    handleBooleanChange={this.handleBooleanChange}
+                    handleArrayValueChange={this.handleArrayValueChange}
+                    handleSubmit={this.handleSubmit}
+                    handleRadioChange={this.handleRadioChange}
+                  />
+
+                  <Animals animalData={this.state.data} />
+                </>}
+
             />
             <Route
-            exact path='/profile'
-            element={<Profile />}
-            
+              exact path='/profile'
+              element={<Profile />}
+
             />
-             <Route
-            exact path='/aboutus'
-            element={<AboutUs />}
-            
+            <Route
+              exact path='/aboutus'
+              element={<AboutUs />}
+
             />
           </Routes>
 
-          {/* <Container style={containerStyling}>
-            <Accordion defaultActiveKey="type" alwaysOpen>
-
-            {
-              //! Type Accordion Element
-            }
-            <Accordion.Item eventKey="type">
-              <Accordion.Header>I am looking for a:</Accordion.Header>
-              <Accordion.Body>
-                <Form>
-
-                  <Form.Check
-                    inline
-                    type='checkbox'
-                    label='cat'
-                    onClick={() => this.handleArrayValueChange('type', 'cat')}
-                  />
-                  <Form.Check
-                    inline
-                    type='checkbox'
-                    label='dog'
-                    onClick={() => this.handleArrayValueChange('type', 'dog')}
-                  />
-                  <Form.Check
-                    inline
-                    type='checkbox'
-                    label='Small furry critter'
-                    onClick={() => this.handleArrayValueChange('type', 'critter')}
-                  />
-
-                </Form>
-              </Accordion.Body>
-            </Accordion.Item>
-
-              {
-                //! Age Accordion Element
-              }
-            <Accordion.Item eventKey="age">
-              <Accordion.Header>Of the age(s):</Accordion.Header>
-              <Accordion.Body>
-                <Form>
-                  <Form.Check
-                    inline
-                    type='checkbox'
-                    label='baby'
-                    onClick={() => this.handleArrayValueChange('age', 'baby')}
-                  />
-                  <Form.Check
-                    inline
-                    type='checkbox'
-                    label='young'
-                    onClick={() => this.handleArrayValueChange('age', 'young')}
-                  />
-                  <Form.Check
-                    inline
-                    type='checkbox'
-                    label='adult'
-                    onClick={() => this.handleArrayValueChange('age', 'adult')}
-                  />
-                  <Form.Check
-                    inline
-                    type='checkbox'
-                    label='senior'
-                    onClick={() => this.handleArrayValueChange('age', 'senior')}
-                  />
-                </Form>
-              </Accordion.Body>
-            </Accordion.Item>
 
 
-            {
-              //! gender Accordion Element
-            }
-            <Accordion.Item eventKey="gender">
-              <Accordion.Header>Of the gender(s):</Accordion.Header>
-              <Accordion.Body>
-                <Form>
-                  <Form.Check
-                    inline
-                    type='checkbox'
-                    label='male'
-                    onClick={() => this.handleArrayValueChange('gender', 'male')}
-                  />
-                  <Form.Check
-                    inline
-                    type='checkbox'
-                    label='female'
-                    onClick={() => this.handleArrayValueChange('gender', 'female')}
-                  />
-                  <Form.Check
-                    inline
-                    type='checkbox'
-                    label='unknown'
-                    onClick={() => this.handleArrayValueChange('gender', 'unknown')}
-                  />
-                </Form>
-              </Accordion.Body>
-            </Accordion.Item>
-
-              {
-                //! Distance/Location Accordion Element
-              }
-              <Accordion.Item eventKey="disloc">
-                <Accordion.Header>
-                  Located:
-                </Accordion.Header>
-                <Accordion.Body>
-                  <InputGroup className="mb-3">
-                    within
-                    <Form.Select onChange={this.handleDistanceChange} aria-label="milesDistanceSelect">
-                      <option value={50}>50</option>
-                      <option value={100}>100</option>
-                      <option value={250}>250</option>
-                      <option value={500}>500</option>
-                    </Form.Select>
-                    <InputGroup.Text id="milesOfAddon">miles of</InputGroup.Text>
-                    <Form>
-                      <Form.Control onChange={this.handleLocationChange} type="location" placeholder="City, state, or ZIP" />
-                    </Form>
-                  </InputGroup>
-                </Accordion.Body>
-              </Accordion.Item>
-
-                          
-            {
-              //! Size Accordion Element
-            }
-            <Accordion.Item eventKey="size">
-              <Accordion.Header>of the size(s):</Accordion.Header>
-              <Accordion.Body>
-                <Form>
-                  <Form.Check
-                    inline
-                    type='checkbox'
-                    label='small'
-                    onClick={() => this.handleArrayValueChange('size', 'small')}
-                  />
-                  <Form.Check
-                    inline
-                    type='checkbox'
-                    label='medium'
-                    onClick={() => this.handleArrayValueChange('size', 'medium')}
-                  />
-                  <Form.Check
-                    inline
-                    type='checkbox'
-                    label='large'
-                    onClick={() => this.handleArrayValueChange('size', 'large')}
-                  />
-                  <Form.Check
-                    inline
-                    type='checkbox'
-                    label='extra large'
-                    onClick={() => this.handleArrayValueChange('size', 'xlarge')}
-                  />
-                </Form>
-              </Accordion.Body>
-            </Accordion.Item>
-
-
-
-            {
-              //! Temperament Accordion Element
-            }
-            <Accordion.Item eventKey="temper">
-              <Accordion.Header>with a temperament that is:</Accordion.Header>
-              <Accordion.Body>
-                <Form>
-                  <Form.Check
-                    inline
-                    type='checkbox'
-                    label='good with cats'
-                    onClick={() => this.handleBooleanChange('good_with_cats')}
-                  />
-                  <Form.Check
-                    inline
-                    type='checkbox'
-                    label='good with dogs'
-                    onClick={() => this.handleBooleanChange('good_with_dogs')}
-                  />
-                  <Form.Check
-                    inline
-                    type='checkbox'
-                    label='good with children'
-                    onClick={() => this.handleBooleanChange('good_with_children')}
-                  />
-                </Form>
-              </Accordion.Body>
-            </Accordion.Item>
-          </Accordion>
-
-
-
-            {
-              //! submit button
-            }
-
-            <Button onClick={() => this.handleSubmit()}>
-              Search For Pets!
-            </Button>
-          </Container>
-
-
-
-
-          <Footer className='footer'/>
+          <Footer className='footer' />
 
 
         </Router>
