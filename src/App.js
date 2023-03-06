@@ -7,13 +7,13 @@ import Profile from './components/profile';
 import AboutUs from './components/about-us';
 import Footer from './components/Footer';
 import Animals from './components/Animals';
+import NavigationBar from './components/Navbar';
 
 import {
   BrowserRouter as Router,
   Routes,
   Route
 } from "react-router-dom";
-
 
 
 class App extends React.Component {
@@ -174,6 +174,7 @@ class App extends React.Component {
 
         <Router>
           <Header className='header' />
+          <NavigationBar className='navbar' />
           <Routes>
             <Route
               exact path='/'
