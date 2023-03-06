@@ -4,6 +4,18 @@ import Button from 'react-bootstrap/Button';
 
 class Pet extends React.Component {
 
+  fillModal = () => {
+    this.props.handleShowModal(
+      this.props.pet.pet_name,
+      this.props.pet.pet_age,
+      this.props.pet.pet_gender,
+      this.props.pet.pet_type,
+      this.props.pet.pet_size,
+      this.props.pet.pet_status,
+      this.props.pet.pet_distance,
+      this.props.pet.pet_link
+      )
+  }
 
   render() {
 
@@ -23,7 +35,7 @@ class Pet extends React.Component {
           <Card.Text>
             Size: {this.props.pet.pet_size}
           </Card.Text>
-          <Button variant="primary">More Info</Button>
+          <Button onClick={this.fillModal} variant="primary">More Info</Button>
           <Button variant="info">Favorite!</Button>
 
         </Card.Body>

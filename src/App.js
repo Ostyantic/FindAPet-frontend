@@ -7,8 +7,8 @@ import Profile from './components/profile';
 import AboutUs from './components/about-us';
 import Footer from './components/Footer';
 import Animals from './components/Animals';
+import InfoModal from './components/infoModal';
 import NavigationBar from './components/Navbar';
-
 import {
   BrowserRouter as Router,
   Routes,
@@ -62,7 +62,17 @@ class App extends React.Component {
       //distance, in miles. integer. Requires location to be set to be valid. Defaults to 100, maximum 500.
       distance: 50,
 
-      data: []
+      data: [],
+
+      showModal: false,
+      modalName:'',
+      modalAge:'',
+      modalGender:'',
+      modalType:'',
+      modalSize:'',
+      modalStatus:'',
+      modalDistance:'',
+      modalLink:'',
 
 
 
@@ -136,6 +146,26 @@ class App extends React.Component {
     return assembled
   }
 
+  handleShowModal = (name,age,gender,type,size,status,dist,link) => {
+    this.setState({
+     showModal: true,
+     modalName:name,
+     modalAge:age,
+     modalGender:gender,
+     modalType:type,
+     modalSize:size,
+     modalStatus:status,
+     modalDistance:dist,
+     modalLink:link,
+
+    });
+  };
+
+  handleCloseModal = () => {
+    this.setState({
+      showModal: false
+    });
+  };
 
   //?called when Search For Pets! is clicked.
   handleSubmit = async () => {
@@ -189,7 +219,22 @@ class App extends React.Component {
                     handleSubmit={this.handleSubmit}
                     handleRadioChange={this.handleRadioChange}
                   />
-                  <Animals animalData={this.state.data} />
+                  <Animals 
+                  animalData={this.state.data}
+                  handleShowModal={this.handleShowModal} 
+                  />
+                  <InfoModal
+                  showModal={this.state.showModal}
+                  handleCloseModal={this.handleCloseModal}
+                  name={this.state.modalName}
+                  age={this.state.modalAge}
+                  gender={this.state.modalGender}
+                  type={this.state.modalType}
+                  size={this.state.modalSize}
+                  status={this.state.modalStatus}
+                  distance={this.state.modalDistance}
+                  link={this.state.modalLink}
+                  />
                 </>}
 
             />

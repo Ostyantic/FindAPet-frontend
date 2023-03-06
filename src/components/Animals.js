@@ -15,7 +15,10 @@ class Animals extends React.Component {
         {this.props.animalData.map((animal, idx) =>
 
           <Card key={ idx } style={{ width: '18rem' }}>
-            <Pet pet={animal} />
+            <Pet 
+            pet={animal}
+            handleShowModal={this.props.handleShowModal}
+             />
           </Card>
 
         )}
