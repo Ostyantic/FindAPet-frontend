@@ -7,11 +7,13 @@ import InputGroup from 'react-bootstrap/InputGroup';
 
 const containerStyling = {
   color: "white",
-  backgroundColor: "DodgerBlue",
+  // backgroundColor: "DodgerBlue",
   padding: ".5em",
   fontFamily: "Arial",
-  width: "100%",
+  width: "500px",
   textAlign: "center",
+  // border: "1px solid black",
+
 };
 
 
@@ -21,13 +23,13 @@ class Home extends React.Component {
     return (
       <>
         <Container style={containerStyling}>
-          <Accordion defaultActiveKey="type" alwaysOpen>
+          <Accordion className='Search' defaultActiveKey="type" alwaysOpen>
 
             {
               //! Type Accordion Element
             }
             <Accordion.Item eventKey="animaltype">
-              <Accordion.Header>I am looking for a:</Accordion.Header>
+              <Accordion.Header>I am looking for a</Accordion.Header>
               <Accordion.Body>
                 <Form>
 
@@ -71,7 +73,7 @@ class Home extends React.Component {
               //! Age Accordion Element
             }
             <Accordion.Item eventKey="age">
-              <Accordion.Header>Of the age(s):</Accordion.Header>
+              <Accordion.Header>Age</Accordion.Header>
               <Accordion.Body>
                 <Form>
                   <Form.Check
@@ -107,7 +109,7 @@ class Home extends React.Component {
               //! gender Accordion Element
             }
             <Accordion.Item eventKey="gender">
-              <Accordion.Header>Of the gender(s):</Accordion.Header>
+              <Accordion.Header>Gender</Accordion.Header>
               <Accordion.Body>
                 <Form>
                   <Form.Check
@@ -131,7 +133,7 @@ class Home extends React.Component {
             }
             <Accordion.Item eventKey="disloc">
               <Accordion.Header>
-                Located:
+                Location
               </Accordion.Header>
               <Accordion.Body>
                 <InputGroup className="mb-3">
@@ -155,7 +157,7 @@ class Home extends React.Component {
               //! Size Accordion Element
             }
             <Accordion.Item eventKey="size">
-              <Accordion.Header>of the size(s):</Accordion.Header>
+              <Accordion.Header>Size</Accordion.Header>
               <Accordion.Body>
                 <Form>
                   <Form.Check
@@ -192,7 +194,7 @@ class Home extends React.Component {
               //! Temperament Accordion Element
             }
             <Accordion.Item eventKey="temper">
-              <Accordion.Header>with a temperament that is:</Accordion.Header>
+              <Accordion.Header>Temperament</Accordion.Header>
               <Accordion.Body>
                 <Form>
                   <Form.Check
@@ -222,13 +224,13 @@ class Home extends React.Component {
             //! submit button
           }
 
-          <Button onClick={() => this.props.handleSubmit()}>
-            Search For Pets!
-          </Button>
 
 
 
         </Container>
+          <Button onClick={() => this.props.handleSubmit()}>
+            Search For Pets!
+          </Button>
       </>)
   }
 }
