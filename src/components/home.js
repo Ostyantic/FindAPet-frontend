@@ -4,6 +4,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Row from 'react-bootstrap/Row'
 
 const containerStyling = {
   color: "white",
@@ -16,14 +17,27 @@ const containerStyling = {
 
 };
 
+const milesDistanceSelectStyling = {
+  width: "80px",
+  flex: "none"
+};
 
+const locationSelectStyling = {
+  width: "220px",
+  flex: "none"
+}
+
+const inlineGreyText = {
+  //Bababa Is Color And Rock Is Push
+  color: "#bababa"
+}
 
 class Home extends React.Component {
   render() {
     return (
       <>
         <Container style={containerStyling}>
-          <Accordion className='Search' defaultActiveKey="type" alwaysOpen>
+          <Accordion className='Search' defaultActiveKey={["animaltype", "disloc"]} alwaysOpen>
 
             {
               //! Type Accordion Element
@@ -69,11 +83,40 @@ class Home extends React.Component {
               </Accordion.Body>
             </Accordion.Item>
 
+
+            {
+              //! Distance/Location Accordion Element
+            }
+            <Accordion.Item eventKey="disloc">
+              <Accordion.Header>
+                Location
+              </Accordion.Header>
+              <Accordion.Body>
+                <Row>
+                  <InputGroup>
+                    within
+                    <Form.Select style={milesDistanceSelectStyling} onChange={this.props.handleDistanceChange} aria-label="milesDistanceSelect">
+                      <option value={50}>50</option>
+                      <option value={100}>100</option>
+                      <option value={250}>250</option>
+                      <option value={500}>500</option>
+                    </Form.Select>
+                    <InputGroup.Text id="milesOfAddon">miles of</InputGroup.Text>
+                    <Form.Control style={locationSelectStyling} onChange={this.props.handleLocationChange} type="location" placeholder="(City, State) or ZIP" />
+                    <Form.Text className="text-muted">
+                      If you search by city, make sure to format like so: "Seattle, WA"
+                    </Form.Text>
+                  </InputGroup>
+                </Row>
+              </Accordion.Body>
+            </Accordion.Item>
+
+
             {
               //! Age Accordion Element
             }
             <Accordion.Item eventKey="age">
-              <Accordion.Header>Age</Accordion.Header>
+              <Accordion.Header>Age&nbsp;<text style={inlineGreyText}>(optional)</text></Accordion.Header>
               <Accordion.Body>
                 <Form>
                   <Form.Check
@@ -109,7 +152,7 @@ class Home extends React.Component {
               //! gender Accordion Element
             }
             <Accordion.Item eventKey="gender">
-              <Accordion.Header>Gender</Accordion.Header>
+              <Accordion.Header>Gender&nbsp;<text style={inlineGreyText}>(optional)</text></Accordion.Header>
               <Accordion.Body>
                 <Form>
                   <Form.Check
@@ -128,36 +171,12 @@ class Home extends React.Component {
               </Accordion.Body>
             </Accordion.Item>
 
-            {
-              //! Distance/Location Accordion Element
-            }
-            <Accordion.Item eventKey="disloc">
-              <Accordion.Header>
-                Location
-              </Accordion.Header>
-              <Accordion.Body>
-                <InputGroup className="mb-3">
-                  within
-                  <Form.Select onChange={this.props.handleDistanceChange} aria-label="milesDistanceSelect">
-                    <option value={50}>50</option>
-                    <option value={100}>100</option>
-                    <option value={250}>250</option>
-                    <option value={500}>500</option>
-                  </Form.Select>
-                  <InputGroup.Text id="milesOfAddon">miles of</InputGroup.Text>
-                  <Form>
-                    <Form.Control onChange={this.props.handleLocationChange} type="location" placeholder="City, state, or ZIP" />
-                  </Form>
-                </InputGroup>
-              </Accordion.Body>
-            </Accordion.Item>
-
 
             {
               //! Size Accordion Element
             }
             <Accordion.Item eventKey="size">
-              <Accordion.Header>Size</Accordion.Header>
+              <Accordion.Header>Size&nbsp;<text style={inlineGreyText}>(optional)</text></Accordion.Header>
               <Accordion.Body>
                 <Form>
                   <Form.Check
@@ -194,7 +213,7 @@ class Home extends React.Component {
               //! Temperament Accordion Element
             }
             <Accordion.Item eventKey="temper">
-              <Accordion.Header>Temperament</Accordion.Header>
+              <Accordion.Header>Temperament&nbsp;<text style={inlineGreyText}>(optional)</text></Accordion.Header>
               <Accordion.Body>
                 <Form>
                   <Form.Check
@@ -228,9 +247,9 @@ class Home extends React.Component {
 
 
         </Container>
-          <Button className="accordionButton" onClick={() => this.props.handleSubmit()}>
-            Search For Pets!
-          </Button>
+        <Button className="accordionButton" onClick={() => this.props.handleSubmit()}>
+          Search For Pets!
+        </Button>
       </>)
   }
 }

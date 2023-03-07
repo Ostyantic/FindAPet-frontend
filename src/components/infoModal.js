@@ -20,7 +20,7 @@ class infoModal extends React.Component {
             <p>Gender: {this.props.gender}</p>
             <p>Type: {this.props.type}</p>
             <p>Distance: {this.props.distance}</p>
-            <p><a href={this.props.link}>Click here to find out more about {this.props.name}!</a></p>
+            <p><a href={this.props.link} rel={"noreferrer"} target={"_blank"}>Click here to find out more about {this.props.name}!</a></p>
           </Modal.Body>
           <Modal.Footer className="hola">
           <Button className="modalFooter" variant="secondary" onClick={this.props.handleCloseModal}>
