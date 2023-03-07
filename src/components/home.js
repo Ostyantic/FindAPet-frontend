@@ -228,7 +228,7 @@ class Home extends React.Component {
 
 
         </Container>
-          <Button onClick={() => this.props.handleSubmit()}>
+          <Button className="accordionButton" onClick={() => this.props.handleSubmit()}>
             Search For Pets!
           </Button>
       </>)

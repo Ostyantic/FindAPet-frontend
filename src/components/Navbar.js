@@ -10,15 +10,15 @@ import { withAuth0 } from "@auth0/auth0-react";
 class NavigationBar extends React.Component {
   render() {
     return(
-      <Navbar className="header" expand='lg' variant="light">
+      <Navbar className="navbar" expand='lg' variant="light">
         <Container>
           {/* <Navbar.Brand href=''>Find A Pet!</Navbar.Brand> */}
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="headerNav">
-              <Nav.Link href='/'>Home</Nav.Link>
-              {this.props.auth0.isAuthenticated && <Nav.Link href='/profile'>Profile</Nav.Link>}
-              <Nav.Link href='/aboutus'>AboutUs</Nav.Link>
+              <Nav.Link className="navLink" href='/'>Home 🐾</Nav.Link>
+              {this.props.auth0.isAuthenticated && <Nav.Link className="navLink" href='/profile'>Profile 🐾</Nav.Link>}
+              <Nav.Link className="navLink" href='/aboutus'>About Us 🐾</Nav.Link>
             </Nav>
           </Navbar.Collapse>
           {this.props.auth0.isAuthenticated ? <LogoutButton /> : <LoginButton />}

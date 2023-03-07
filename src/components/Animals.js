@@ -10,11 +10,11 @@ class Animals extends React.Component {
 
     return (
 
-      <>
+      <div className='cards'>
 
         {this.props.animalData.map((animal, idx) =>
 
-          <Card key={ idx } style={{ width: '18rem' }}>
+          <Card className='actualCard' key={ idx } style={{ width: '18rem' }}>
             <Pet 
             pet={animal}
             handleShowModal={this.props.handleShowModal}
@@ -24,7 +24,7 @@ class Animals extends React.Component {
         )}
 
 
-      </>
+      </div>
 
     )
   }

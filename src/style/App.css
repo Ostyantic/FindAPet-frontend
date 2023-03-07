@@ -1,12 +1,96 @@
-h1 {
+/* color palette:
+
+Pastel pink: #D16BA5
+Lilac: #86A8E7
+Mint: #5FFBF1
+
+
+Alternative color palette:
+
+Pastel off blue: #809bce
+Very soft mint: #d3f8e2
+Very soft lilac: #e4c1f9
+Baby pink: #f694c1
+Weird pastel yellow: #ede7b1
+Baby blue: #a9def9
+
+
+background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+ */
+
+
+@import url('https://fonts.googleapis.com/css2?family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sigmar+One&family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Londrina+Solid:wght@900&family=Sigmar+One&family=Titan+One&display=swap');
+
+
+.header {
   background-image: url(header-image.png);
-  height: 250px;
+  height: 300px;
+  text-align: center;
 }
 
-.elements {
-  color: black;
+h1 {
+  position: relative;
+  top: 30px;
+  font-family: Londrina Solid;
+  font-size: 90px !important;
+  color: #F694C1;
 }
 
 .Search{
-  width: 600px;
+  padding-top: 30px;
+  width: 700px;
 }
+
+.navbar {
+  background-color: #809bce;
+  height: 70px;
+}
+
+.navLink:hover {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.cards  {
+  display: flex;
+  flex-direction: row;
+  padding: 60px 60px 50px 50px;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-evenly;
+}
+
+.actualCard {
+  flex: 1 1 calc(20% - 10px);
+  padding: 17px;
+  border: 1px solid;
+  border-radius: 10%;
+  box-shadow: 3px 3px 2px #cccc;
+}
+
+/* .cards {
+  display: grid;
+  padding: 60px 40px 50px 50px;
+  grid-template-columns: repeat(5, 1fr)
+} */
+
+.modalHeader {
+  background-color: #e4c1f9;
+  font-family: Titan One;
+  font-size: 20px;
+}
+
+/* .modalBody {
+  background-color: #d3f8e2;
+}
+
+.modalFooter {
+  background-color: black;
+} */
+
+.accordionButton {
+  margin-left: 685px;
+}
+

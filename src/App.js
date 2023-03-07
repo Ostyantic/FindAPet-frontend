@@ -193,7 +193,7 @@ class App extends React.Component {
 
     this.setState({ data: backendResponse.data })
 
-  }
+  };
 
   render() {
 
