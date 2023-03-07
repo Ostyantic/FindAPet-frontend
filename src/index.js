@@ -7,7 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const { isAuthenticated } = useAuth0;
 root.render(
   <React.StrictMode>
     <Auth0Provider
