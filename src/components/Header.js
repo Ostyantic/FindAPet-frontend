@@ -4,8 +4,10 @@ import '../style/App.css'
 
 class Header extends React.Component {
   render() {
-    return(
-     <h1>Find A Pet!</h1>
+    return (
+      <div className="header">
+        <h1>FIND A PET</h1>
+      </div>
     )
   }
 }

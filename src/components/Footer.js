@@ -7,7 +7,7 @@ class Footer extends React.Component {
   render() {
     return (
       // <Container>
-        <Navbar expand="xl" bg="dark" variant="dark">
+        <Navbar expand="xl" variant="dark">
           <Container>
             <Navbar.Brand style={{margin:'auto'}}>Anthony Lopez, Araceli Garcia &amp; Casey Glidewell 301 Final Project 2023 &copy;</Navbar.Brand>
           </Container>
