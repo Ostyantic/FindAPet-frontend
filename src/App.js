@@ -10,6 +10,8 @@ import Animals from './components/Animals';
 import InfoModal from './components/infoModal';
 import NavigationBar from './components/Navbar';
 import Sidebar from './components/Sidebar'
+import { withAuth0 } from '@auth0/auth0-react';
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -64,21 +66,42 @@ class App extends React.Component {
       distance: 50,
 
       data: [],
+      favoritePets: [],
 
       showModal: false,
-      modalName:'',
-      modalAge:'',
-      modalGender:'',
-      modalType:'',
-      modalSize:'',
-      modalStatus:'',
-      modalDistance:'',
-      modalLink:'',
+      modalName: '',
+      modalAge: '',
+      modalGender: '',
+      modalType: '',
+      modalSize: '',
+      modalStatus: '',
+      modalDistance: '',
+      modalLink: '',
 
 
 
 
     };
+  }
+
+  async componentDidMount() {
+    try {
+      if (this.props.auth0.isAuthenticated) {
+        const res = await this.props.auth0.getIdTokenClaims();
+        const url = `${process.env.REACT_APP_SERVER}/pets`;
+        const jwt = res.__raw;
+        const config = {
+          headers: { Authorization: `Bearer ${jwt}` },
+        };
+        const favoritePets = await axios(url, config);
+        console.log(favoritePets.data)
+        this.setState({ 
+          favoritePets: favoritePets.data
+        })
+      }
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   handleBooleanChange = e => {
@@ -108,7 +131,6 @@ class App extends React.Component {
 
     //Update our state with the new key valuearray pair.
     this.setState({ [key]: current })
-
   };
 
 
@@ -120,10 +142,10 @@ class App extends React.Component {
   handleAssembleUrl = () => {
     var parameterNestedArray = []
 
-
+    //push in the mandatory type data first...
     parameterNestedArray.push(`type=${this.state.type}`)
 
-
+    //add in all of the optional parameters if any exist.
     if (this.state.age.length !== 0) {
       var ageStringed = this.state.age.join(',')
       console.log(`age=${ageStringed}`)
@@ -142,22 +164,29 @@ class App extends React.Component {
       parameterNestedArray.push(`size=${sizeStringed}`)
     }
 
-    var assembled = parameterNestedArray.join('&');
+    //!If a location has been entered, add in distance AND location data
+    if (this.state.location.length !== 0) {
+      console.log(`location=${this.state.location}`)
+      parameterNestedArray.push(`location=${this.state.location}`)
+      parameterNestedArray.push(`distance=${this.state.distance}`)
+    }
 
+    //With the array assembled, join each element together in a string separated with &s.
+    var assembled = parameterNestedArray.join('&');
     return assembled
   }
 
-  handleShowModal = (name,age,gender,type,size,status,dist,link) => {
+  handleShowModal = (name, age, gender, type, size, status, dist, link) => {
     this.setState({
-     showModal: true,
-     modalName:name,
-     modalAge:age,
-     modalGender:gender,
-     modalType:type,
-     modalSize:size,
-     modalStatus:status,
-     modalDistance:dist,
-     modalLink:link,
+      showModal: true,
+      modalName: name,
+      modalAge: age,
+      modalGender: gender,
+      modalType: type,
+      modalSize: size,
+      modalStatus: status,
+      modalDistance: dist,
+      modalLink: link,
 
     });
   };
@@ -196,6 +225,48 @@ class App extends React.Component {
 
   };
 
+  //function to create and add a favorite pet
+  handlePostPet = async(newPet) => {
+    let url = `${process.env.REACT_APP_SERVER}/pets`;
+    try {
+      if (this.props.auth0.isAuthenticated) {
+        const res = await this.props.auth0.getIdTokenClaims();
+        const jwt = res.__raw;
+        const config = {
+          headers: {"Authorization": `bearer ${jwt}`}, 
+        }
+        let createdPet = await axios.post(url, newPet, config)
+        this.setState({
+          favoritePets: [...this.state.favoritePets, createdPet.data],
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  // function to delete a favorite pet and update this list of favorite pets
+  // handleDeletePet = async (_id) => {
+  //   let url = `${process.env.REACT_APP_SERVER}/pets/${_id}`;
+  //   try{
+  //     if (this.props.auth0.isAuthenticated){
+  //       const res = await this.props.auth0.getIdTokenClaims();
+  //       const jwt = res.__raw;
+  //       const config = {
+  //         headers: {"Authorization": `bearer ${jwt}`}, 
+  //       }
+  //       await axios.delete(url, config)
+  //       let updatedPets = this.state.favoritePets.filter(pet => pet._id !== _id);
+  //       this.setState({
+  //         favoritePets: updatedPets
+  //       })
+  //     }
+  //   }
+  //   catch(err){
+  //     console.error(err)
+  //   }
+  // }
+
   render() {
 
 
@@ -220,21 +291,24 @@ class App extends React.Component {
                     handleSubmit={this.handleSubmit}
                     handleRadioChange={this.handleRadioChange}
                   />
+
                   <Animals 
                   animalData={this.state.data}
+                   // favoritePets={this.state.favoritePets}
+                  handlePostPet={this.handlePostPet}
                   handleShowModal={this.handleShowModal} 
                   />
                   <InfoModal
-                  showModal={this.state.showModal}
-                  handleCloseModal={this.handleCloseModal}
-                  name={this.state.modalName}
-                  age={this.state.modalAge}
-                  gender={this.state.modalGender}
-                  type={this.state.modalType}
-                  size={this.state.modalSize}
-                  status={this.state.modalStatus}
-                  distance={this.state.modalDistance}
-                  link={this.state.modalLink}
+                    showModal={this.state.showModal}
+                    handleCloseModal={this.handleCloseModal}
+                    name={this.state.modalName}
+                    age={this.state.modalAge}
+                    gender={this.state.modalGender}
+                    type={this.state.modalType}
+                    size={this.state.modalSize}
+                    status={this.state.modalStatus}
+                    distance={this.state.modalDistance}
+                    link={this.state.modalLink}
                   />
                 </>}
 
@@ -244,6 +318,11 @@ class App extends React.Component {
               element={<>
               <Sidebar className="sidebar" />
               <Profile /></>}
+              element={this.props.auth0.isAuthenticated && <Profile 
+                className='userProfile'
+                handleDeletePet={this.handleDeletePet}
+                favoritePets={this.state.favoritePets}
+                />}
             />
             <Route
               exact path='/aboutus'
@@ -260,4 +339,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withAuth0(App);

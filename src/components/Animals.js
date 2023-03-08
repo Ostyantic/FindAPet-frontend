@@ -18,6 +18,7 @@ class Animals extends React.Component {
             <Pet 
             pet={animal}
             handleShowModal={this.props.handleShowModal}
+            handlePostPet={this.props.handlePostPet}
              />
           </Card>
 
