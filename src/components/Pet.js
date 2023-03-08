@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import placeholder from '../images/placeholder.jpg'
 
 class Pet extends React.Component {
 
@@ -13,8 +14,11 @@ class Pet extends React.Component {
       this.props.pet.pet_size,
       this.props.pet.pet_status,
       this.props.pet.pet_distance,
-      this.props.pet.pet_link
-      )
+      this.props.pet.pet_link,
+      this.props.pet.pet_photo,
+
+    )
+    console.log(this.props.pet.pet_photo.small)
   }
 
   render() {
@@ -23,7 +27,7 @@ class Pet extends React.Component {
 
       <>
 
-        <Card.Img variant="top" src="holder.js/100px180" alt={this.props.pet.pet_name} />
+        <Card.Img variant="top" src={this.props.pet.pet_photo ? this.props.pet.pet_photo.small : placeholder} alt={this.props.pet.pet_name} />
         <Card.Body>
           <Card.Title>{this.props.pet.pet_name}</Card.Title>
           <Card.Text>
