@@ -1,29 +1,24 @@
-import React from 'react';
+import React from "react";
 // import ReactDOM from 'react-dom/client';
-import axios from 'axios';
-import Header from './components/Header';
-import Home from './components/home';
-import Profile from './components/profile';
-import AboutUs from './components/about-us';
-import Footer from './components/Footer';
-import Animals from './components/Animals';
-import InfoModal from './components/infoModal';
-import NavigationBar from './components/Navbar';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route
-} from "react-router-dom";
+import axios from "axios";
+import Header from "./components/Header";
+import Home from "./components/home";
+import Profile from "./components/profile";
+import AboutUs from "./components/about-us";
+import Footer from "./components/Footer";
+import Animals from "./components/Animals";
+import InfoModal from "./components/infoModal";
+import NavigationBar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
+import { withAuth0 } from "@auth0/auth0-react";
 
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 class App extends React.Component {
-
-
   constructor(props) {
     super(props);
 
     this.state = {
-
       //species and type. EX: type:'dog'  |  species:'dog'
       //?Species is for more specialized searches that might be out of scope for this project. Not making a dropdown menu of every rabbit breed, dog breed, etc. in the world.
       type: [],
@@ -53,104 +48,120 @@ class App extends React.Component {
 
       //built in sort system. valid args 'recent' '-recent' 'distance' '-distance' 'random'
       //?note the minusrecent and minusdistance. Those give the results in reverse order.
-      sort: '',
-
+      sort: "",
 
       //location. String. can be a city, a state, a lat lon pair, or a postal code.
-      location: '',
+      location: "",
 
       //distance, in miles. integer. Requires location to be set to be valid. Defaults to 100, maximum 500.
       distance: 50,
 
       data: [],
+      favoritePets: [],
 
       showModal: false,
-      modalName: '',
-      modalAge: '',
-      modalGender: '',
-      modalType: '',
-      modalSize: '',
-      modalStatus: '',
-      modalDistance: '',
-      modalLink: '',
-
-
-
-
+      modalName: "",
+      modalAge: "",
+      modalGender: "",
+      modalType: "",
+      modalSize: "",
+      modalStatus: "",
+      modalDistance: "",
+      modalLink: "",
     };
   }
 
-  handleBooleanChange = e => {
-    //Get a string from event fire, toggle respective state's true/false.
-    this.state[e] ? this.setState({ [e]: false }) : this.setState({ [e]: true });
+  async componentDidMount() {
+    try {
+      if (this.props.auth0.isAuthenticated) {
+        const res = await this.props.auth0.getIdTokenClaims();
+        const url = `${process.env.REACT_APP_SERVER}/pets`;
+        const jwt = res.__raw;
+        const config = {
+          headers: { Authorization: `Bearer ${jwt}` },
+        };
+        const favoritePets = await axios(url, config);
+        console.log(favoritePets.data);
+        this.setState({
+          favoritePets: favoritePets.data,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
   }
+
+  handleBooleanChange = (e) => {
+    //Get a string from event fire, toggle respective state's true/false.
+    this.state[e]
+      ? this.setState({ [e]: false })
+      : this.setState({ [e]: true });
+  };
 
   //?Called when the location value changes specifically.
   handleLocationChange = (e) => {
-    this.setState({ location: e.target.value })
-  }
+    this.setState({ location: e.target.value });
+  };
 
   //?Called when the distance value changes specifically.
   handleDistanceChange = (e) => {
-    this.setState({ distance: e.target.value })
-  }
-
+    this.setState({ distance: e.target.value });
+  };
 
   //?called for keyvalue pairs where the value is a mutable array. for example  {size:[small, large, xlarge]}
   handleArrayValueChange = (key, value) => {
-
     //Save to var our keyvalue pair's current value array
     var current = this.state[key];
 
     //If the value already exists in the array, remove it. If it does not exist, add it.
-    current.indexOf(value) > -1 ? current.splice(current.indexOf(value), 1) : current.push(value)
+    current.indexOf(value) > -1
+      ? current.splice(current.indexOf(value), 1)
+      : current.push(value);
 
     //Update our state with the new key valuearray pair.
-    this.setState({ [key]: current })
+    this.setState({ [key]: current });
   };
 
-
   handleRadioChange = (key, value) => {
-    this.setState({ [key]: value })
-  }
-
+    this.setState({ [key]: value });
+  };
 
   handleAssembleUrl = () => {
-    var parameterNestedArray = []
+    var parameterNestedArray = [];
 
     //push in the mandatory type data first...
-    parameterNestedArray.push(`type=${this.state.type}`)
+    parameterNestedArray.push(`type=${this.state.type}`);
 
     //add in all of the optional parameters if any exist.
     if (this.state.age.length !== 0) {
-      var ageStringed = this.state.age.join(',')
-      console.log(`age=${ageStringed}`)
-      parameterNestedArray.push(`age=${ageStringed}`)
+      var ageStringed = this.state.age.join(",");
+      console.log(`age=${ageStringed}`);
+      parameterNestedArray.push(`age=${ageStringed}`);
     }
 
     if (this.state.gender.length !== 0) {
-      var genderStringed = this.state.gender.join(',')
-      console.log(`gender=${genderStringed}`)
-      parameterNestedArray.push(`gender=${genderStringed}`)
+      var genderStringed = this.state.gender.join(",");
+      console.log(`gender=${genderStringed}`);
+      parameterNestedArray.push(`gender=${genderStringed}`);
     }
 
     if (this.state.size.length !== 0) {
-      var sizeStringed = this.state.size.join(',')
-      console.log(`size=${sizeStringed}`)
-      parameterNestedArray.push(`size=${sizeStringed}`)
+      var sizeStringed = this.state.size.join(",");
+      console.log(`size=${sizeStringed}`);
+      parameterNestedArray.push(`size=${sizeStringed}`);
     }
 
     //!If a location has been entered, add in distance AND location data
     if (this.state.location.length !== 0) {
-      console.log(`location=${this.state.location}`)
-      parameterNestedArray.push(`location=${this.state.location}`)
-      parameterNestedArray.push(`distance=${this.state.distance}`)
+      console.log(`location=${this.state.location}`);
+      parameterNestedArray.push(`location=${this.state.location}`);
+      parameterNestedArray.push(`distance=${this.state.distance}`);
     }
 
     //With the array assembled, join each element together in a string separated with &s.
-    var assembled = parameterNestedArray.join('&');
-    return assembled
-  }
+    var assembled = parameterNestedArray.join("&");
+    return assembled;
+  };
 
   handleShowModal = (name, age, gender, type, size, status, dist, link) => {
     this.setState({
@@ -163,60 +174,94 @@ class App extends React.Component {
       modalStatus: status,
       modalDistance: dist,
       modalLink: link,
-
     });
   };
 
   handleCloseModal = () => {
     this.setState({
-      showModal: false
+      showModal: false,
     });
   };
 
   //?called when Search For Pets! is clicked.
   handleSubmit = async () => {
-
-    console.log(`Type: ${this.state.type}`)
-    console.log(`Age: ${this.state.age}`)
-    console.log(`Gender: ${this.state.gender}`)
-    console.log(`Distance: ${this.state.distance}`)
-    console.log(`Location: ${this.state.location}`)
-    console.log(`Size: ${this.state.size}`)
-    console.log(`Good Cats: ${this.state.good_with_cats}`)
-    console.log(`Good Children: ${this.state.good_with_children}`)
-    console.log(`Good Dogs: ${this.state.good_with_dogs}`)
+    console.log(`Type: ${this.state.type}`);
+    console.log(`Age: ${this.state.age}`);
+    console.log(`Gender: ${this.state.gender}`);
+    console.log(`Distance: ${this.state.distance}`);
+    console.log(`Location: ${this.state.location}`);
+    console.log(`Size: ${this.state.size}`);
+    console.log(`Good Cats: ${this.state.good_with_cats}`);
+    console.log(`Good Children: ${this.state.good_with_children}`);
+    console.log(`Good Dogs: ${this.state.good_with_dogs}`);
 
     var sentArgs = this.handleAssembleUrl();
-    console.log(`SENT ARGS: ${sentArgs}`)
+    console.log(`SENT ARGS: ${sentArgs}`);
 
-    var url = `${process.env.REACT_APP_SERVER}/getpet?${sentArgs}`
+    var url = `${process.env.REACT_APP_SERVER}/getpet?${sentArgs}`;
     console.log(url);
 
-    var backendResponse = await axios.get(url)
+    var backendResponse = await axios.get(url);
 
     console.log(backendResponse.data);
 
-
-    this.setState({ data: backendResponse.data })
-
+    this.setState({ data: backendResponse.data });
   };
 
+  //function to create and add a favorite pet
+  handlePostPet = async (newPet) => {
+    let url = `${process.env.REACT_APP_SERVER}/pets`;
+    try {
+      if (this.props.auth0.isAuthenticated) {
+        const res = await this.props.auth0.getIdTokenClaims();
+        const jwt = res.__raw;
+        const config = {
+          headers: { Authorization: `bearer ${jwt}` },
+        };
+        let createdPet = await axios.post(url, newPet, config);
+        this.setState({
+          favoritePets: [...this.state.favoritePets, createdPet.data],
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // function to delete a favorite pet and update this list of favorite pets
+  // handleDeletePet = async (_id) => {
+  //   let url = `${process.env.REACT_APP_SERVER}/pets/${_id}`;
+  //   try{
+  //     if (this.props.auth0.isAuthenticated){
+  //       const res = await this.props.auth0.getIdTokenClaims();
+  //       const jwt = res.__raw;
+  //       const config = {
+  //         headers: {"Authorization": `bearer ${jwt}`},
+  //       }
+  //       await axios.delete(url, config)
+  //       let updatedPets = this.state.favoritePets.filter(pet => pet._id !== _id);
+  //       this.setState({
+  //         favoritePets: updatedPets
+  //       })
+  //     }
+  //   }
+  //   catch(err){
+  //     console.error(err)
+  //   }
+  // }
+
   render() {
-
-
     return (
       <>
-
-
         <Router>
-          <Header className='header' />
-          <NavigationBar className='navbar' />
+          <Header className="header" />
+          <NavigationBar className="navbar" />
           <Routes>
             <Route
-              exact path='/'
+              exact
+              path="/"
               element={
                 <>
-
                   <Home
                     handleLocationChange={this.handleLocationChange}
                     handleDistanceChange={this.handleDistanceChange}
@@ -225,8 +270,11 @@ class App extends React.Component {
                     handleSubmit={this.handleSubmit}
                     handleRadioChange={this.handleRadioChange}
                   />
+
                   <Animals
                     animalData={this.state.data}
+                    // favoritePets={this.state.favoritePets}
+                    handlePostPet={this.handlePostPet}
                     handleShowModal={this.handleShowModal}
                   />
                   <InfoModal
@@ -241,26 +289,35 @@ class App extends React.Component {
                     distance={this.state.modalDistance}
                     link={this.state.modalLink}
                   />
-                </>}
+                </>
+              }
+            />
+            <Route
+              exact
+              path="/profile"
+              element={
+                this.props.auth0.isAuthenticated && (
+                  <>
+                    <Sidebar className="sidebar" />
 
+                    <Profile
+                      className="userProfile"
+                      handleDeletePet={this.handleDeletePet}
+                      favoritePets={this.state.favoritePets}
+                    />
+                  </>
+                )
+              }
             />
-            <Route
-              exact path='/profile'
-              element={<Profile />}
-            />
-            <Route
-              exact path='/aboutus'
-              element={<AboutUs />}
-            />
+
+            <Route exact path="/aboutus" element={<AboutUs />} />
           </Routes>
 
-          <Footer className='footer' />
-
-
+          <Footer className="footer" />
         </Router>
       </>
     );
   }
 }
 
-export default App;
+export default withAuth0(App);
