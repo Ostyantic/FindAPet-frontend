@@ -95,7 +95,7 @@ class App extends React.Component {
         };
         const favoritePets = await axios(url, config);
         console.log(favoritePets.data)
-        this.setState({ 
+        this.setState({
           favoritePets: favoritePets.data
         })
       }
@@ -226,14 +226,14 @@ class App extends React.Component {
   };
 
   //function to create and add a favorite pet
-  handlePostPet = async(newPet) => {
+  handlePostPet = async (newPet) => {
     let url = `${process.env.REACT_APP_SERVER}/pets`;
     try {
       if (this.props.auth0.isAuthenticated) {
         const res = await this.props.auth0.getIdTokenClaims();
         const jwt = res.__raw;
         const config = {
-          headers: {"Authorization": `bearer ${jwt}`}, 
+          headers: { "Authorization": `bearer ${jwt}` },
         }
         let createdPet = await axios.post(url, newPet, config)
         this.setState({
@@ -292,11 +292,11 @@ class App extends React.Component {
                     handleRadioChange={this.handleRadioChange}
                   />
 
-                  <Animals 
-                  animalData={this.state.data}
-                   // favoritePets={this.state.favoritePets}
-                  handlePostPet={this.handlePostPet}
-                  handleShowModal={this.handleShowModal} 
+                  <Animals
+                    animalData={this.state.data}
+                    // favoritePets={this.state.favoritePets}
+                    handlePostPet={this.handlePostPet}
+                    handleShowModal={this.handleShowModal}
                   />
                   <InfoModal
                     showModal={this.state.showModal}
@@ -315,15 +315,18 @@ class App extends React.Component {
             />
             <Route
               exact path='/profile'
-              element={<>
-              <Sidebar className="sidebar" />
-              <Profile /></>}
-              element={this.props.auth0.isAuthenticated && <Profile 
-                className='userProfile'
-                handleDeletePet={this.handleDeletePet}
-                favoritePets={this.state.favoritePets}
-                />}
+              element={this.props.auth0.isAuthenticated && (
+                <>
+                  <Sidebar className="sidebar" />
+                  <Profile
+                    className='userProfile'
+                    handleDeletePet={this.handleDeletePet}
+                    favoritePets={this.state.favoritePets}
+                  />
+                </>
+              )}
             />
+
             <Route
               exact path='/aboutus'
               element={<AboutUs />}

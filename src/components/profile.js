@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
+import '../style/App.css'
 
 
 class Profile extends React.Component {
@@ -63,7 +64,7 @@ class Profile extends React.Component {
   
   render() {
 
-    // const { user } = this.props.auth0
+    const { user } = this.props.auth0
     
     // console.log(user);
     // console.log(this.props.favoritePets);
@@ -76,12 +77,12 @@ class Profile extends React.Component {
         <p>{user.email}</p>
       </div>
     
-      <Container>
+      <Container className="favoritePets">
         {/* <img src={user.picture} alt={user.name} /> */}
         {/* <h2>{user.name}</h2>
             <p>{user.email}</p> */}
-        <Card>
           {this.state.favoritePets.map((pet, idx) => (
+        <Card className="favoriteCards" style={{ width: '18rem' }}>
             <div key={idx}>
               <Card.Header>
                 <Card.Title>{pet.name}</Card.Title>
@@ -90,7 +91,7 @@ class Profile extends React.Component {
                 <Card.Text>Type: {pet.type}</Card.Text>
                 <Card.Text>gender: {pet.gender}</Card.Text>
                 <Card.Text>Size: {pet.size}</Card.Text>
-                <Card.Text>URL: {pet.link}</Card.Text>
+                <Card.Text> <a href={pet.link}>Find out more about {pet.name} here!</a></Card.Text>
               </Card.Body>
               {this.props.auth0.isAuthenticated && (
                 <Card.Footer>
@@ -100,8 +101,8 @@ class Profile extends React.Component {
                 </Card.Footer>
               )}
             </div>
-          ))}
         </Card>
+          ))}
       </Container>
       </>
     );
