@@ -1,0 +1,148 @@
+/* color palette:
+
+Pastel pink: #D16BA5
+Lilac: #86A8E7
+Mint: #5FFBF1
+
+
+Alternative color palette:
+
+Pastel off blue: #809bce
+Very soft mint: #d3f8e2
+Very soft lilac: #e4c1f9
+Baby pink: #f694c1
+Weird pastel yellow: #ede7b1
+Baby blue: #a9def9
+
+
+background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+ */
+
+
+@import url('https://fonts.googleapis.com/css2?family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sigmar+One&family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Londrina+Solid:wght@900&family=Sigmar+One&family=Titan+One&display=swap');
+
+
+
+/* ------------------ HEADER COMPONENT ------------------- */
+
+.header {
+  background-image: url(header-image.png);
+  height: 300px;
+  text-align: center;
+}
+
+h1 {
+  position: relative;
+  top: 30px;
+  font-family: Londrina Solid;
+  font-size: 90px !important;
+  color: #F694C1;
+}
+
+
+/* ------------------ SEARCH FORM ------------------- */
+
+.Search{
+  padding-top: 30px;
+  width: 700px;
+}
+
+.accordionButton {
+  margin-left: 685px;
+}
+
+/* ------------------ NAVIGATION BAR ------------------- */
+
+.navbar {
+  background-color: #809bce;
+  height: 60px;
+}
+
+.navLink {
+  font-size: 25px !important;
+}
+
+.navLink:hover {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+
+/* ------------------ PET CARDS ------------------- */
+
+
+.cards  {
+  display: flex;
+  flex-direction: row;
+  padding: 60px 60px 50px 50px;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-evenly;
+}
+
+.actualCard {
+  flex: 1 1 calc(20% - 10px);
+  padding: 17px;
+  border: 1px solid;
+  border-radius: 10%;
+  box-shadow: 3px 3px 2px #cccc;
+}
+
+/* .cards {
+  display: grid;
+  padding: 60px 40px 50px 50px;
+  grid-template-columns: repeat(5, 1fr)
+} */
+
+
+/* ------------------ PET MODAL ------------------- */
+
+.modalHeader {
+  background-color: #e4c1f9;
+  font-family: Titan One;
+  font-size: 20px;
+}
+
+
+/* ------------------ USER PROFILE ------------------- */
+
+.userProfile {
+  padding: 50px;
+  height: 450px;
+}
+
+.userName {
+  padding: 20px 0 0 0;
+}
+
+
+/* ------------------ USER PROFILE ------------------- */
+
+.sidebar {
+  position: fixed;
+  width: 15%;
+  background-color: #ede7b1;  
+  height: 500px;
+  display: block;
+  overflow: hidden;
+}
+
+.userProfile {
+  padding-left: 300px;
+}
+
+.menu {
+  font-family: Londrina Solid;
+  font-size: 50px;
+  padding-top: 30px;
+  padding-left: 10px;
+}
+
+.logoutButton {
+  z-index: 1;
+  position: absolute;
+  padding-left: 10px;
+  padding-top: 380px;
+}

@@ -1,0 +1,78 @@
+/* color palette:
+
+Pastel pink: #D16BA5
+Lilac: #86A8E7
+Mint: #5FFBF1
+
+background-image: linear-gradient(to right top, #5ffbf1, #68f6f9, #75f1fe, #85ecff, #95e6ff, #99dfff, #a2d8ff, #acd0ff, #bbc3fd, #d0b4f2, #e6a3de, #f694c1);
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sigmar+One&family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Londrina+Solid:wght@900&family=Sigmar+One&family=Titan+One&display=swap');
+
+
+
+body {
+  background-image: linear-gradient(to right top, #5ffbf1, #68f6f9, #75f1fe, #85ecff, #95e6ff, #99dfff, #a2d8ff, #acd0ff, #bbc3fd, #d0b4f2, #e6a3de, #f694c1);
+}
+
+.profileName {
+  font-family: Titan One;
+  font-size: 25px !important;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-area {
+  padding: 130px 0px;
+}
+
+.card {
+  overflow: hidden;
+  width: 450px;
+}
+
+.img1 img {
+  height: 200px;
+  width: 500px;
+}
+
+.img2 img {
+  position: relative;
+  display: block;
+  margin: auto;
+  z-index: 1;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 7px solid white;
+  margin-top: -80px;
+}
+
+.card:hover .img2 img {
+  border-color: #d16ba5;
+  transition: 1s;
+}
+
+.biography {
+  padding: 30px 15px;
+  text-align: center;
+}
+
+.biography h2 {
+  font-weight: 900;
+  font-size: 20px;
+  padding-bottom: 15px;
+}
+
+.socials {
+  text-align: center;
+  padding-bottom: 20px;
+}
+
