@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import Animals from './components/Animals';
 import InfoModal from './components/infoModal';
 import NavigationBar from './components/Navbar';
+import { withAuth0 } from '@auth0/auth0-react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -63,6 +64,7 @@ class App extends React.Component {
       distance: 50,
 
       data: [],
+      favoritePets: [],
 
       showModal: false,
       modalName: '',
@@ -78,6 +80,26 @@ class App extends React.Component {
 
 
     };
+  }
+
+  async componentDidMount() {
+    try {
+      if (this.props.auth0.isAuthenticated) {
+        const res = await this.props.auth0.getIdTokenClaims();
+        const url = `${process.env.REACT_APP_SERVER}/pets`;
+        const jwt = res.__raw;
+        const config = {
+          headers: { Authorization: `Bearer ${jwt}` },
+        };
+        const favoritePets = await axios(url, config);
+        console.log(favoritePets.data)
+        this.setState({ 
+          favoritePets: favoritePets.data
+        })
+      }
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   handleBooleanChange = e => {
@@ -201,6 +223,48 @@ class App extends React.Component {
 
   };
 
+  //function to create and add a favorite pet
+  handlePostPet = async(newPet) => {
+    let url = `${process.env.REACT_APP_SERVER}/pets`;
+    try {
+      if (this.props.auth0.isAuthenticated) {
+        const res = await this.props.auth0.getIdTokenClaims();
+        const jwt = res.__raw;
+        const config = {
+          headers: {"Authorization": `bearer ${jwt}`}, 
+        }
+        let createdPet = await axios.post(url, newPet, config)
+        this.setState({
+          favoritePets: [...this.state.favoritePets, createdPet.data],
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  // function to delete a favorite pet and update this list of favorite pets
+  // handleDeletePet = async (_id) => {
+  //   let url = `${process.env.REACT_APP_SERVER}/pets/${_id}`;
+  //   try{
+  //     if (this.props.auth0.isAuthenticated){
+  //       const res = await this.props.auth0.getIdTokenClaims();
+  //       const jwt = res.__raw;
+  //       const config = {
+  //         headers: {"Authorization": `bearer ${jwt}`}, 
+  //       }
+  //       await axios.delete(url, config)
+  //       let updatedPets = this.state.favoritePets.filter(pet => pet._id !== _id);
+  //       this.setState({
+  //         favoritePets: updatedPets
+  //       })
+  //     }
+  //   }
+  //   catch(err){
+  //     console.error(err)
+  //   }
+  // }
+
   render() {
 
 
@@ -225,9 +289,12 @@ class App extends React.Component {
                     handleSubmit={this.handleSubmit}
                     handleRadioChange={this.handleRadioChange}
                   />
-                  <Animals
-                    animalData={this.state.data}
-                    handleShowModal={this.handleShowModal}
+
+                  <Animals 
+                  animalData={this.state.data}
+                   // favoritePets={this.state.favoritePets}
+                  handlePostPet={this.handlePostPet}
+                  handleShowModal={this.handleShowModal} 
                   />
                   <InfoModal
                     showModal={this.state.showModal}
@@ -246,7 +313,11 @@ class App extends React.Component {
             />
             <Route
               exact path='/profile'
-              element={<Profile />}
+              element={this.props.auth0.isAuthenticated && <Profile 
+                className='userProfile'
+                handleDeletePet={this.handleDeletePet}
+                favoritePets={this.state.favoritePets}
+                />}
             />
             <Route
               exact path='/aboutus'
@@ -263,4 +334,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withAuth0(App);
