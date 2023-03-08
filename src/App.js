@@ -81,10 +81,12 @@ class App extends React.Component {
           headers: { Authorization: `Bearer ${jwt}` },
         };
         const favoritePets = await axios(url, config);
+
         console.log(favoritePets.data);
         this.setState({
           favoritePets: favoritePets.data,
         });
+
       }
     } catch (err) {
       console.error(err);
@@ -216,9 +218,11 @@ class App extends React.Component {
         const res = await this.props.auth0.getIdTokenClaims();
         const jwt = res.__raw;
         const config = {
+
           headers: { Authorization: `bearer ${jwt}` },
         };
         let createdPet = await axios.post(url, newPet, config);
+
         this.setState({
           favoritePets: [...this.state.favoritePets, createdPet.data],
         });
@@ -293,21 +297,24 @@ class App extends React.Component {
               }
             />
             <Route
-              exact
-              path="/profile"
-              element={
-                this.props.auth0.isAuthenticated && (
-                  <>
-                    <Sidebar className="sidebar" />
 
-                    <Profile
-                      className="userProfile"
-                      handleDeletePet={this.handleDeletePet}
-                      favoritePets={this.state.favoritePets}
-                    />
-                  </>
-                )
-              }
+              exact path='/profile'
+              element={this.props.auth0.isAuthenticated && (
+                <>
+                  <Sidebar className="sidebar" />
+                  <Profile
+                    className='userProfile'
+                    handleDeletePet={this.handleDeletePet}
+                    favoritePets={this.state.favoritePets}
+                  />
+                </>
+              )}
+            />
+
+            <Route
+              exact path='/aboutus'
+              element={<AboutUs />}
+
             />
 
             <Route exact path="/aboutus" element={<AboutUs />} />

@@ -25,6 +25,7 @@ background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8f
 
 
 
+
 /* ------------------ HEADER COMPONENT ------------------- */
 
 .header {
@@ -44,7 +45,7 @@ h1 {
 
 /* ------------------ SEARCH FORM ------------------- */
 
-.Search{
+.Search {
   padding-top: 30px;
   width: 700px;
 }
@@ -73,7 +74,7 @@ h1 {
 /* ------------------ PET CARDS ------------------- */
 
 
-.cards  {
+.cards {
   display: flex;
   flex-direction: row;
   padding: 60px 60px 50px 50px;
@@ -118,31 +119,40 @@ h1 {
 }
 
 
-/* ------------------ USER PROFILE ------------------- */
+/* ------------------ NAVBAR ------------------- */
 
 .sidebar {
-  position: fixed;
-  width: 15%;
-  background-color: #ede7b1;  
-  height: 500px;
-  display: block;
+  /* position: relative; */
+  background-color: #ede7b1;
+  width: 100%;
+  height: 85px;
+  display: inline-block;
   overflow: hidden;
 }
 
 .userProfile {
-  padding-left: 300px;
+  padding-left: 120px;
 }
 
 .menu {
   font-family: Londrina Solid;
   font-size: 50px;
-  padding-top: 30px;
-  padding-left: 10px;
+  text-align: center;
+  padding-top: 10px;
 }
 
-.logoutButton {
-  z-index: 1;
-  position: absolute;
-  padding-left: 10px;
-  padding-top: 380px;
+
+/* ------------------ FAVORITED PETS - USER PROFILE ------------------- */
+
+
+.favoritePets.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  gap: 20px
+}
+
+.favoriteCards {
+    justify-self: stretch;
+    align-self: stretch;
 }
