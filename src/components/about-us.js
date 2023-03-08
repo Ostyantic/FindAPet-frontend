@@ -45,11 +45,11 @@ class AboutUs extends React.Component {
                 <div className="img2"><img src={Anthony} alt="" /> </div>
                 <div className="biography">
                   <h2 className="profileName">ANTHONY LOPEZ</h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  <p>I am a Software developer with a background in Order Management and Customer Care. I am an aspiring video game developer with a passion to use code to create unforgettable gaming experiences. I have two cats, both siblings named Shadow (right) & Onyx (left).</p>
                 </div>
                 <div className="socials">
-                <a href="https://www.linkedin.com/in/antalopez/"><LinkedInIcon/></a>
-                <a href="https://github.com/Ostyantic"><GitHubIcon/></a>
+                  <a href="https://www.linkedin.com/in/antalopez/"><LinkedInIcon /></a>
+                  <a href="https://github.com/Ostyantic"><GitHubIcon /></a>
                 </div>
               </div>
             </div>
@@ -61,7 +61,9 @@ class AboutUs extends React.Component {
                 <div className="img2"><img src={Araceli} alt="" /> </div>
                 <div className="biography">
                   <h2 className="profileName">ARACELI GARCÍA</h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  <p>Future Software Developer with a background in Hospitality and Hotel Management always looking for the next opportunity to outgrow herself.
+                    Passionate about developing quality and appealing products. In love with her greyhound pet Susi.
+                  </p>
                 </div>
                 <div className="socials">
                   <a href="https://www.linkedin.com/in/araceli-garcia-martinez/"><LinkedInIcon /></a>
