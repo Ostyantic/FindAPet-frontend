@@ -9,7 +9,9 @@ import Footer from './components/Footer';
 import Animals from './components/Animals';
 import InfoModal from './components/infoModal';
 import NavigationBar from './components/Navbar';
+import Sidebar from './components/Sidebar'
 import { withAuth0 } from '@auth0/auth0-react';
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -313,6 +315,9 @@ class App extends React.Component {
             />
             <Route
               exact path='/profile'
+              element={<>
+              <Sidebar className="sidebar" />
+              <Profile /></>}
               element={this.props.auth0.isAuthenticated && <Profile 
                 className='userProfile'
                 handleDeletePet={this.handleDeletePet}

@@ -7,8 +7,19 @@ Mint: #5FFBF1
 background-image: linear-gradient(to right top, #5ffbf1, #68f6f9, #75f1fe, #85ecff, #95e6ff, #99dfff, #a2d8ff, #acd0ff, #bbc3fd, #d0b4f2, #e6a3de, #f694c1);
  */
 
+@import url('https://fonts.googleapis.com/css2?family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sigmar+One&family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Londrina+Solid:wght@900&family=Sigmar+One&family=Titan+One&display=swap');
+
+
+
 body {
   background-image: linear-gradient(to right top, #5ffbf1, #68f6f9, #75f1fe, #85ecff, #95e6ff, #99dfff, #a2d8ff, #acd0ff, #bbc3fd, #d0b4f2, #e6a3de, #f694c1);
+}
+
+.profileName {
+  font-family: Titan One;
+  font-size: 25px !important;
 }
 
 .container {

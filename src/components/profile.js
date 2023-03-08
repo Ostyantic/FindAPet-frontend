@@ -69,6 +69,13 @@ class Profile extends React.Component {
     // console.log(this.props.favoritePets);
 
     return (
+    <>
+      <div className="userProfile">
+        <img src={user.picture} alt={user.name} />
+        <h2 className="userName">{user.name}</h2>
+        <p>{user.email}</p>
+      </div>
+    
       <Container>
         {/* <img src={user.picture} alt={user.name} /> */}
         {/* <h2>{user.name}</h2>
@@ -96,6 +103,7 @@ class Profile extends React.Component {
           ))}
         </Card>
       </Container>
+      </>
     );
   }
 };
