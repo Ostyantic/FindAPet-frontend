@@ -24,6 +24,9 @@ background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8f
 @import url('https://fonts.googleapis.com/css2?family=Chewy&family=Londrina+Solid:wght@900&family=Sigmar+One&family=Titan+One&display=swap');
 
 
+
+/* ------------------ HEADER COMPONENT ------------------- */
+
 .header {
   background-image: url(header-image.png);
   height: 300px;
@@ -38,20 +41,37 @@ h1 {
   color: #F694C1;
 }
 
+
+/* ------------------ SEARCH FORM ------------------- */
+
 .Search{
   padding-top: 30px;
   width: 700px;
 }
 
+.accordionButton {
+  margin-left: 685px;
+}
+
+/* ------------------ NAVIGATION BAR ------------------- */
+
 .navbar {
   background-color: #809bce;
-  height: 70px;
+  height: 60px;
+}
+
+.navLink {
+  font-size: 25px !important;
 }
 
 .navLink:hover {
-  font-size: 20px;
+  font-size: 30px;
   font-weight: bold;
 }
+
+
+/* ------------------ PET CARDS ------------------- */
+
 
 .cards  {
   display: flex;
@@ -76,21 +96,53 @@ h1 {
   grid-template-columns: repeat(5, 1fr)
 } */
 
+
+/* ------------------ PET MODAL ------------------- */
+
 .modalHeader {
   background-color: #e4c1f9;
   font-family: Titan One;
   font-size: 20px;
 }
 
-/* .modalBody {
-  background-color: #d3f8e2;
+
+/* ------------------ USER PROFILE ------------------- */
+
+.userProfile {
+  padding: 50px;
+  height: 450px;
 }
 
-.modalFooter {
-  background-color: black;
-} */
-
-.accordionButton {
-  margin-left: 685px;
+.userName {
+  padding: 20px 0 0 0;
 }
 
+
+/* ------------------ USER PROFILE ------------------- */
+
+.sidebar {
+  position: fixed;
+  width: 15%;
+  background-color: #ede7b1;  
+  height: 500px;
+  display: block;
+  overflow: hidden;
+}
+
+.userProfile {
+  padding-left: 300px;
+}
+
+.menu {
+  font-family: Londrina Solid;
+  font-size: 50px;
+  padding-top: 30px;
+  padding-left: 10px;
+}
+
+.logoutButton {
+  z-index: 1;
+  position: absolute;
+  padding-left: 10px;
+  padding-top: 380px;
+}

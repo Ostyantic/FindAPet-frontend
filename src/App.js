@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import Animals from './components/Animals';
 import InfoModal from './components/infoModal';
 import NavigationBar from './components/Navbar';
+import Sidebar from './components/Sidebar'
 import {
   BrowserRouter as Router,
   Routes,
@@ -240,7 +241,9 @@ class App extends React.Component {
             />
             <Route
               exact path='/profile'
-              element={<Profile />}
+              element={<>
+              <Sidebar className="sidebar" />
+              <Profile /></>}
             />
             <Route
               exact path='/aboutus'
