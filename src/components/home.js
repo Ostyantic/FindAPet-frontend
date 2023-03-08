@@ -116,7 +116,7 @@ class Home extends React.Component {
               //! Age Accordion Element
             }
             <Accordion.Item eventKey="age">
-              <Accordion.Header>Age&nbsp;<text style={inlineGreyText}>(optional)</text></Accordion.Header>
+              <Accordion.Header>Age&nbsp;<p style={inlineGreyText}>(optional)</p></Accordion.Header>
               <Accordion.Body>
                 <Form>
                   <Form.Check
@@ -152,7 +152,7 @@ class Home extends React.Component {
               //! gender Accordion Element
             }
             <Accordion.Item eventKey="gender">
-              <Accordion.Header>Gender&nbsp;<text style={inlineGreyText}>(optional)</text></Accordion.Header>
+              <Accordion.Header>Gender&nbsp;<p style={inlineGreyText}>(optional)</p></Accordion.Header>
               <Accordion.Body>
                 <Form>
                   <Form.Check
@@ -176,7 +176,7 @@ class Home extends React.Component {
               //! Size Accordion Element
             }
             <Accordion.Item eventKey="size">
-              <Accordion.Header>Size&nbsp;<text style={inlineGreyText}>(optional)</text></Accordion.Header>
+              <Accordion.Header>Size&nbsp;<p style={inlineGreyText}>(optional)</p></Accordion.Header>
               <Accordion.Body>
                 <Form>
                   <Form.Check
@@ -213,7 +213,7 @@ class Home extends React.Component {
               //! Temperament Accordion Element
             }
             <Accordion.Item eventKey="temper">
-              <Accordion.Header>Temperament&nbsp;<text style={inlineGreyText}>(optional)</text></Accordion.Header>
+              <Accordion.Header>Temperament&nbsp;<p style={inlineGreyText}>(optional)</p></Accordion.Header>
               <Accordion.Body>
                 <Form>
                   <Form.Check
